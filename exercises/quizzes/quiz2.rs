@@ -28,6 +28,24 @@ mod my_module {
 
     // TODO: Complete the function as described above.
     // pub fn transformer(input: ???) -> ??? { ??? }
+    pub fn transformer(input: Vec<(String,Command)>) -> Vec<String>{
+        let mut return_strings : Vec<String> = Vec::new();
+            for  command in input  {
+              match command.1 {
+                Command::Uppercase => return_strings.push(command.0.to_uppercase().clone()),
+                Command::Trim => return_strings.push(command.0.trim().to_string()),
+                Command::Append(amount) => {
+                    let mut return_string = command.0;
+                    for _ in 0..amount  {
+                        return_string += "bar"
+                    }
+                    return_strings.push(return_string);
+                },
+                  
+              }
+            }
+            return_strings
+    }
 }
 
 fn main() {
@@ -38,6 +56,7 @@ fn main() {
 mod tests {
     // TODO: What do we need to import to have `transformer` in scope?
     // use ???;
+    use super::my_module;
     use super::Command;
 
     #[test]
@@ -48,7 +67,7 @@ mod tests {
             ("foo".to_string(), Command::Append(1)),
             ("bar".to_string(), Command::Append(5)),
         ];
-        let output = transformer(input);
+        let output = my_module::transformer(input);
 
         assert_eq!(
             output,
